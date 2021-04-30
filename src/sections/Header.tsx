@@ -87,9 +87,9 @@ const Header: React.FC = (props) => {
         >
           <MenuItems to="/">Home</MenuItems>
           <MenuItems to="/signin">Sign In</MenuItems>
-          <MenuItems to="/signup">Sign Up</MenuItems>
+          <MenuItems to="/contact">Contact</MenuItems>
           <MenuItems to="/features">Features</MenuItems>
-          <MenuItems to="/contact" isLast>
+          <MenuItems to="/signup" isLast>
             <Button
               size="sm"
               rounded="md"
@@ -99,7 +99,7 @@ const Header: React.FC = (props) => {
                 bg: ["neutral.50", "neutral.50", "primary.400", "primary.400"],
               }}
             >
-              Contact
+              Create account
             </Button>
           </MenuItems>
         </Flex>
