@@ -16,7 +16,7 @@ const theme = extendTheme({
     neutral: {
       50: "#F2FDFF",
     },
-    red: {
+    primary: {
       400: "#F1414D",
     },
     purple: {
