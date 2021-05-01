@@ -86,9 +86,9 @@ const Header: React.FC = (props) => {
           pt={[8, 8, 0, 0]}
         >
           <MenuItems to="/">Home</MenuItems>
-          <MenuItems to="/signin">Sign In</MenuItems>
-          <MenuItems to="/contact">Contact</MenuItems>
           <MenuItems to="/features">Features</MenuItems>
+          <MenuItems to="/contact">Contact</MenuItems>
+          <MenuItems to="/signin">Sign In</MenuItems>
           <MenuItems to="/signup" isLast>
             <Button
               size="sm"
