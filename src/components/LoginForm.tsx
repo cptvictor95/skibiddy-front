@@ -26,7 +26,7 @@ const LoginForm: React.FC = () => {
   const onSubmit = async (data: FormData) => {
     try {
       const response = await axios.post(`${baseUrl}/signin`, data);
-      console.log(response.data);
+      console.info("login response", response.data);
 
       const token = response.data.token;
 
