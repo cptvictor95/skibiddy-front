@@ -6,6 +6,7 @@ import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { baseUrl } from "../contants";
 import FormControl from "./FormControl";
 
 interface FormData {
@@ -26,7 +27,7 @@ const SignUpForm: React.FC = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await axios.post("http://localhost:3003/signup", data);
+      const response = await axios.post(`${baseUrl}/signup`, data);
       console.log(response.data);
 
       reset({
@@ -138,7 +139,9 @@ const SignUpForm: React.FC = () => {
           />
         </FormControl>
 
-        <Button type="submit">Create</Button>
+        <Button type="submit" alignSelf="flex-end">
+          Create
+        </Button>
       </Box>
     </Flex>
   );
