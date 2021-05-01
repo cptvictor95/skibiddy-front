@@ -65,6 +65,7 @@ const SignUpForm: React.FC = () => {
           )}
           <Input
             id="name"
+            type="text"
             placeholder="John Doe"
             {...register("name", {
               required: "is required",
@@ -107,6 +108,7 @@ const SignUpForm: React.FC = () => {
           )}
           <Input
             id="email"
+            type="email"
             placeholder="john.doe@email.com"
             {...register("email", {
               required: "is required",
@@ -129,6 +131,7 @@ const SignUpForm: React.FC = () => {
           <Input
             id="password"
             placeholder="******"
+            type="password"
             {...register("password", {
               required: "is required",
             })}
