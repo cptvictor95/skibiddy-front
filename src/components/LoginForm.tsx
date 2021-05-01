@@ -4,6 +4,7 @@ import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
 import { baseUrl } from "../contants";
 import FormControl from "./FormControl";
 
@@ -20,23 +21,30 @@ const LoginForm: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>();
   const toast = useToast();
+  const history = useHistory();
 
   const onSubmit = async (data: FormData) => {
     try {
       const response = await axios.post(`${baseUrl}/signin`, data);
       console.log(response.data);
 
+      const token = response.data.token;
+
+      localStorage.setItem("token", token);
+
       reset({
         email: "",
         password: "",
       });
 
-      return toast({
+      toast({
         title: `${response.data.status}`,
         description: `${response.data.message}`,
         duration: 5000,
         isClosable: true,
       });
+
+      return history.push("/feed");
     } catch (error) {
       throw new Error(error.message);
     }
