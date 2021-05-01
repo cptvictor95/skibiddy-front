@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/button";
 import { FormErrorMessage, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
-import { Box, Flex } from "@chakra-ui/layout";
+import { Box, Flex, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import React from "react";
@@ -49,6 +49,9 @@ const SignUpForm: React.FC = () => {
 
   return (
     <Flex direction="column" align="center" justify="center" minH="70vh">
+      <Text as="h2" textStyle="h2">
+        Create account
+      </Text>
       <Box as="form" onSubmit={handleSubmit(onSubmit)} w="250px">
         <FormControl isInvalid={Boolean(errors.name)}>
           {errors.name ? (
@@ -62,6 +65,7 @@ const SignUpForm: React.FC = () => {
           )}
           <Input
             id="name"
+            placeholder="John Doe"
             {...register("name", {
               required: "is required",
             })}
@@ -82,6 +86,7 @@ const SignUpForm: React.FC = () => {
           )}
           <Input
             id="nickname"
+            placeholder="johnDoe123"
             {...register("nickname", {
               required: "is required",
             })}
@@ -102,6 +107,7 @@ const SignUpForm: React.FC = () => {
           )}
           <Input
             id="email"
+            placeholder="john.doe@email.com"
             {...register("email", {
               required: "is required",
             })}
@@ -122,6 +128,7 @@ const SignUpForm: React.FC = () => {
           )}
           <Input
             id="password"
+            placeholder="******"
             {...register("password", {
               required: "is required",
             })}

@@ -1,5 +1,6 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import React from "react";
+import "@fontsource/montserrat";
 import Home from "./pages/Home";
 import theme from "./utils/theme";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -11,6 +12,7 @@ import Features from "./pages/Features";
 const App: React.FC = () => {
   return (
     <ChakraProvider theme={theme}>
+      <CSSReset />
       <BrowserRouter>
         <Switch>
           <Route path="/" exact>

@@ -40,7 +40,7 @@ const Hero: React.FC<{
           {title}
         </Heading>
         <Heading
-          as="h2"
+          as="h4"
           size="md"
           fontWeight="normal"
           opacity="0.8"
@@ -50,7 +50,6 @@ const Hero: React.FC<{
           {subtitle}
         </Heading>
         <Button
-          colorScheme="primary"
           borderRadius="8px"
           size="md"
           lineHeight={1.5}
