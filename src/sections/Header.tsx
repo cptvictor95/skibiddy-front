@@ -5,14 +5,27 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, IconButton } from "@chakra-ui/button";
 import { useColorMode, useColorModeValue } from "@chakra-ui/color-mode";
+import AuthCtx from "../context/authContext";
 
 const Header: React.FC = (props) => {
   const [show, setShow] = React.useState<boolean>(false);
   const toggleMenu = () => setShow(!show);
   const { colorMode, toggleColorMode } = useColorMode();
+  const { states, actions } = React.useContext(AuthCtx);
+  const token = localStorage.getItem("token");
 
   const bg = useColorModeValue("green.300", "neutral.900");
   const color = useColorModeValue("neutral.900", "green.300");
+
+  React.useEffect(() => {
+    if (token) {
+      actions.setToken(token);
+    }
+  }, [states.token, token]);
+
+  const logout = () => {
+    return localStorage.removeItem("token");
+  };
 
   const MenuItems: React.FC<{
     children: React.ReactNode;
@@ -93,30 +106,44 @@ const Header: React.FC = (props) => {
           direction={["column", "row", "row", "row"]}
           pt={[8, 8, 0, 0]}
         >
-          <MenuItems to="/">Home</MenuItems>
-          <MenuItems to="/features">Features</MenuItems>
-          <MenuItems to="/contact">Contact</MenuItems>
-          <MenuItems to="/signin">Sign In</MenuItems>
-          {!show ? (
+          {states.token === token ? (
             <>
-              <MenuItems to="/signup">
-                <Button size="sm" rounded="md" variant="solid">
-                  Create account
-                </Button>
+              <MenuItems to="/feed">Home</MenuItems>
+              <MenuItems to="/features">Features</MenuItems>
+              <MenuItems to="/signin">
+                <Button onClick={logout}>Logout</Button>
               </MenuItems>
-              <IconButton
-                icon={colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
-                onClick={toggleColorMode}
-                variant="solid"
-                aria-label={colorMode === "dark" ? "dark-mode" : "light-mode"}
-              />
             </>
           ) : (
-            <MenuItems to="/signup" isLast>
-              <Button size="sm" rounded="md" variant="solid">
-                Create account
-              </Button>
-            </MenuItems>
+            <>
+              <MenuItems to="/">Home</MenuItems>
+              <MenuItems to="/features">Features</MenuItems>
+              <MenuItems to="/contact">Contact</MenuItems>
+              <MenuItems to="/signin">Sign In</MenuItems>
+              {!show ? (
+                <>
+                  <MenuItems to="/signup">
+                    <Button size="sm" rounded="md" variant="solid">
+                      Create account
+                    </Button>
+                  </MenuItems>
+                  <IconButton
+                    icon={colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
+                    onClick={toggleColorMode}
+                    variant="solid"
+                    aria-label={
+                      colorMode === "dark" ? "dark-mode" : "light-mode"
+                    }
+                  />
+                </>
+              ) : (
+                <MenuItems to="/signup" isLast>
+                  <Button size="sm" rounded="md" variant="solid">
+                    Create account
+                  </Button>
+                </MenuItems>
+              )}
+            </>
           )}
         </Flex>
       </Box>

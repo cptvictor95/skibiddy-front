@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
 export interface AuthContext {
-  states: { token: string | null };
-  actions: { setToken: string | null };
+  states: { token: string };
+  actions: { setToken: string };
 }
 
 const AuthCtx = createContext<any>(null);
