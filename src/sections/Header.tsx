@@ -50,21 +50,13 @@ const Header: React.FC = (props) => {
       <Box as="aside" display={{ base: "block", md: "none" }}>
         {show ? (
           <>
-            {colorMode === "dark" ? (
-              <IconButton
-                icon={<SunIcon />}
-                onClick={toggleColorMode}
-                variant="solid"
-                aria-label="light-mode"
-              />
-            ) : (
-              <IconButton
-                icon={<MoonIcon />}
-                onClick={toggleColorMode}
-                variant="solid"
-                aria-label="dark-mode"
-              />
-            )}
+            <IconButton
+              icon={colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
+              onClick={toggleColorMode}
+              variant="solid"
+              aria-label={colorMode === "dark" ? "dark-mode" : "light-mode"}
+            />
+
             <IconButton
               icon={<CloseIcon />}
               onClick={toggleMenu}
@@ -74,21 +66,12 @@ const Header: React.FC = (props) => {
           </>
         ) : (
           <>
-            {colorMode === "dark" ? (
-              <IconButton
-                icon={<SunIcon />}
-                onClick={toggleColorMode}
-                variant="solid"
-                aria-label="light-mode"
-              />
-            ) : (
-              <IconButton
-                icon={<MoonIcon />}
-                onClick={toggleColorMode}
-                variant="solid"
-                aria-label="dark-mode"
-              />
-            )}
+            <IconButton
+              icon={colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
+              onClick={toggleColorMode}
+              variant="solid"
+              aria-label={colorMode === "dark" ? "dark-mode" : "light-mode"}
+            />
             <IconButton
               icon={<HamburgerIcon />}
               onClick={toggleMenu}
@@ -121,21 +104,12 @@ const Header: React.FC = (props) => {
                   Create account
                 </Button>
               </MenuItems>
-              {colorMode === "dark" ? (
-                <IconButton
-                  icon={<SunIcon />}
-                  onClick={toggleColorMode}
-                  variant="solid"
-                  aria-label="light-mode"
-                />
-              ) : (
-                <IconButton
-                  icon={<MoonIcon />}
-                  onClick={toggleColorMode}
-                  variant="solid"
-                  aria-label="dark-mode"
-                />
-              )}
+              <IconButton
+                icon={colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
+                onClick={toggleColorMode}
+                variant="solid"
+                aria-label={colorMode === "dark" ? "dark-mode" : "light-mode"}
+              />
             </>
           ) : (
             <MenuItems to="/signup" isLast>
