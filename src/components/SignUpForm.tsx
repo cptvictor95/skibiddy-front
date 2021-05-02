@@ -7,14 +7,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import AuthCtx from "../context/authContext";
+import { SignUpDTO } from "../interface/Auth";
 import FormControl from "./FormControl";
-
-interface FormData {
-  name: string;
-  nickname: string;
-  email: string;
-  password: string;
-}
 
 const SignUpForm: React.FC = () => {
   const { authActions } = React.useContext(AuthCtx);
@@ -23,11 +17,11 @@ const SignUpForm: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<SignUpDTO>();
   const toast = useToast();
   const history = useHistory();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: SignUpDTO) => {
     const response = await authActions.signUp(data);
     reset({
       name: "",

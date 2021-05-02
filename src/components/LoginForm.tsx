@@ -5,12 +5,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import AuthCtx from "../context/authContext";
+import { SignInDTO } from "../interface/Auth";
 import FormControl from "./FormControl";
-
-interface FormData {
-  email: string;
-  password: string;
-}
 
 const LoginForm: React.FC = () => {
   const { authActions } = React.useContext(AuthCtx);
@@ -19,11 +15,11 @@ const LoginForm: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<SignInDTO>();
   const toast = useToast();
   const history = useHistory();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: SignInDTO) => {
     const response = await authActions.signIn(data);
 
     reset({

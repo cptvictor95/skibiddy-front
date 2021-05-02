@@ -2,17 +2,7 @@ import axios from "axios";
 import React from "react";
 import { baseUrl } from "../contants";
 import AuthContext from "../context/authContext";
-
-interface SignInDTO {
-  email: string;
-  password: string;
-}
-interface SignUpDTO {
-  name: string;
-  nickname: string;
-  email: string;
-  password: string;
-}
+import { SignInDTO, SignUpDTO } from "../interface/Auth";
 
 export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
   const [token, setToken] = React.useState<string | null>(
