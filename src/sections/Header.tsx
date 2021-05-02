@@ -108,8 +108,18 @@ const Header: React.FC = (props) => {
             <>
               <MenuItems to="/feed">Home</MenuItems>
               <MenuItems to="/features">Features</MenuItems>
+              <IconButton
+                icon={colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
+                onClick={toggleColorMode}
+                variant="solid"
+                size="sm"
+                mr={8}
+                aria-label={colorMode === "dark" ? "dark-mode" : "light-mode"}
+              />
               <MenuItems to="/signin">
-                <Button onClick={logout}>Logout</Button>
+                <Button onClick={logout} size="sm" variant="logout">
+                  Log out
+                </Button>
               </MenuItems>
             </>
           ) : (
@@ -117,7 +127,7 @@ const Header: React.FC = (props) => {
               <MenuItems to="/">Home</MenuItems>
               <MenuItems to="/features">Features</MenuItems>
               <MenuItems to="/contact">Contact</MenuItems>
-              <MenuItems to="/signin">Sign In</MenuItems>
+              <MenuItems to="/signin">Log In</MenuItems>
               {!show ? (
                 <>
                   <MenuItems to="/signup">
@@ -129,6 +139,8 @@ const Header: React.FC = (props) => {
                     icon={colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
                     onClick={toggleColorMode}
                     variant="solid"
+                    borderRadius="full"
+                    size="sm"
                     aria-label={
                       colorMode === "dark" ? "dark-mode" : "light-mode"
                     }

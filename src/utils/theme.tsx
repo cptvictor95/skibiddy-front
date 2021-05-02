@@ -67,6 +67,9 @@ const theme = extendTheme({
       baseStyle: {
         letterSpacing: "1.2px",
       },
+      defaultProps: {
+        variant: "solid",
+      },
       variants: {
         solid: {
           bgColor: "green.300",
@@ -95,6 +98,22 @@ const theme = extendTheme({
           _selected: {
             bg: "transparent",
             borderColor: "transparent",
+          },
+        },
+        logout: {
+          bgColor: "red.400",
+          color: "neutral.900",
+          _hover: {
+            bg: "red.500",
+          },
+          _active: {
+            bg: "red.500",
+          },
+          _focus: {
+            bg: "red.500",
+          },
+          _selected: {
+            bg: "red.500",
           },
         },
       },
