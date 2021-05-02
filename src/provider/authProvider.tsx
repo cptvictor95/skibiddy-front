@@ -27,10 +27,10 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
     setToken(localStorage.getItem("token"));
   }, [token]);
 
-  const states = { token, songs };
-  const actions = { setToken, getSongs };
+  const authStates = { token, songs };
+  const authActions = { setToken, getSongs };
   return (
-    <AuthContext.Provider value={{ states, actions }}>
+    <AuthContext.Provider value={{ authStates, authActions }}>
       {children}
     </AuthContext.Provider>
   );
