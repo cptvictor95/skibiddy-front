@@ -3,26 +3,20 @@ import useAuth from "../hooks/useAuth";
 import Main from "../layouts/Main";
 import React from "react";
 import AuthCtx from "../context/authContext";
-
-type Song = {
-  id: string;
-  title: string;
-  album: string;
-  genre: string;
-  file: string;
-  posted_at: Date;
-  author_id: string;
-};
+import { Song } from "../interface/Song";
+import SongCtx from "../context/songContext";
 
 const Feed = () => {
   useAuth();
-  const { authStates, authActions } = React.useContext(AuthCtx);
+  const { authStates } = React.useContext(AuthCtx);
+  const { songStates, songActions } = React.useContext(SongCtx);
   const token = localStorage.getItem("token");
 
   React.useEffect(() => {
     if (authStates.token) {
-      authActions.getSongs();
+      console.info("auth state token", authStates.token);
     }
+    songActions.getSongs();
   }, [authStates.token, token]);
 
   return (
@@ -32,8 +26,8 @@ const Feed = () => {
           Songs list
         </Text>
         <Flex flexWrap="wrap" p={4}>
-          {authStates.songs &&
-            authStates.songs.map((song: Song) => {
+          {songStates.songs &&
+            songStates.songs.map((song: Song) => {
               return (
                 <Box key={song.id} px={12} py={4}>
                   <Text>{song.title}</Text>

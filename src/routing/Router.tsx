@@ -10,32 +10,35 @@ import Feed from "../pages/Feed";
 import Home from "../pages/Home";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
+import { SongProvider } from "../provider/songProvider";
 
 const Router: React.FC = () => {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/signin">
-            <SignIn />
-          </Route>
-          <Route path="/signup">
-            <SignUp />
-          </Route>
-          <Route path="/features">
-            <Features />
-          </Route>
-          <Route path="/contact">
-            <Contact />
-          </Route>
-          <Route path="/feed">
-            <Feed />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <SongProvider>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Route path="/signin">
+              <SignIn />
+            </Route>
+            <Route path="/signup">
+              <SignUp />
+            </Route>
+            <Route path="/features">
+              <Features />
+            </Route>
+            <Route path="/contact">
+              <Contact />
+            </Route>
+            <Route path="/feed">
+              <Feed />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </SongProvider>
     </AuthProvider>
   );
 };
