@@ -3,7 +3,13 @@ import React from "react";
 import { baseUrl } from "../contants";
 import AuthContext from "../context/authContext";
 
-interface signInDTO {
+interface SignInDTO {
+  email: string;
+  password: string;
+}
+interface SignUpDTO {
+  name: string;
+  nickname: string;
   email: string;
   password: string;
 }
@@ -13,10 +19,23 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
     localStorage.getItem("token")
   );
 
-  const signIn = async (data: signInDTO) => {
+  const signIn = async (data: SignInDTO) => {
     try {
       const response = await axios.post(`${baseUrl}/signin`, data);
 
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      setToken(response.data.token);
+
+      return response;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  const signUp = async (data: SignUpDTO) => {
+    try {
+      const response = await axios.post(`${baseUrl}/signup`, data);
       const token = response.data.token;
       localStorage.setItem("token", token);
       setToken(response.data.token);
@@ -32,7 +51,7 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
   }, [token]);
 
   const authStates = { token };
-  const authActions = { setToken, signIn };
+  const authActions = { setToken, signIn, signUp };
   return (
     <AuthContext.Provider value={{ authStates, authActions }}>
       {children}

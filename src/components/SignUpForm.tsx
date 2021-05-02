@@ -3,10 +3,10 @@ import { FormErrorMessage, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
-import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { baseUrl } from "../contants";
+import { useHistory } from "react-router";
+import AuthCtx from "../context/authContext";
 import FormControl from "./FormControl";
 
 interface FormData {
@@ -17,6 +17,7 @@ interface FormData {
 }
 
 const SignUpForm: React.FC = () => {
+  const { authActions } = React.useContext(AuthCtx);
   const {
     register,
     handleSubmit,
@@ -24,28 +25,25 @@ const SignUpForm: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>();
   const toast = useToast();
+  const history = useHistory();
 
   const onSubmit = async (data: FormData) => {
-    try {
-      const response = await axios.post(`${baseUrl}/signup`, data);
-      console.log(response.data);
+    const response = await authActions.signUp(data);
+    reset({
+      name: "",
+      nickname: "",
+      email: "",
+      password: "",
+    });
 
-      reset({
-        name: "",
-        nickname: "",
-        email: "",
-        password: "",
-      });
+    toast({
+      title: `${response.data.status}`,
+      description: `${response.data.message}`,
+      duration: 5000,
+      isClosable: true,
+    });
 
-      return toast({
-        title: `${response.data.status}`,
-        description: `${response.data.message}`,
-        duration: 5000,
-        isClosable: true,
-      });
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    return history.push("/feed");
   };
 
   return (
