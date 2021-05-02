@@ -10,14 +10,13 @@ const Feed = () => {
   useAuth();
   const { authStates } = React.useContext(AuthCtx);
   const { songStates, songActions } = React.useContext(SongCtx);
-  const token = localStorage.getItem("token");
 
   React.useEffect(() => {
     if (authStates.token) {
       console.info("auth state token", authStates.token);
     }
     songActions.getSongs();
-  }, [authStates.token, token]);
+  }, [authStates.token]);
 
   return (
     <Main title="Feed">

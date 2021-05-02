@@ -12,19 +12,17 @@ const Header: React.FC = (props) => {
   const toggleMenu = () => setShow(!show);
   const { colorMode, toggleColorMode } = useColorMode();
   const { authStates, authActions } = React.useContext(AuthCtx);
-  const token = localStorage.getItem("token");
 
   const bg = useColorModeValue("green.300", "neutral.900");
   const color = useColorModeValue("neutral.900", "green.300");
 
   React.useEffect(() => {
-    if (token) {
-      authActions.setToken(token);
-    }
-  }, [authStates.token, token]);
+    return;
+  }, [authStates.token]);
 
   const logout = () => {
-    return localStorage.removeItem("token");
+    localStorage.removeItem("token");
+    return authActions.setToken(null);
   };
 
   const MenuItems: React.FC<{
@@ -106,7 +104,7 @@ const Header: React.FC = (props) => {
           direction={["column", "row", "row", "row"]}
           pt={[8, 8, 0, 0]}
         >
-          {authStates.token === token ? (
+          {authStates.token && authStates.token ? (
             <>
               <MenuItems to="/feed">Home</MenuItems>
               <MenuItems to="/features">Features</MenuItems>
