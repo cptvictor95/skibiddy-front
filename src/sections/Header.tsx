@@ -107,7 +107,11 @@ const Header: React.FC = (props) => {
           {authStates.token && authStates.token ? (
             <>
               <MenuItems to="/feed">Home</MenuItems>
-              <MenuItems to="/features">Features</MenuItems>
+              <MenuItems to="/publish">
+                <Button size="sm" variant="solid">
+                  Publish song
+                </Button>
+              </MenuItems>
               <IconButton
                 icon={colorMode === "dark" ? <SunIcon /> : <MoonIcon />}
                 onClick={toggleColorMode}

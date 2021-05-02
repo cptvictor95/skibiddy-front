@@ -11,6 +11,7 @@ import Home from "../pages/Home";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import { SongProvider } from "../provider/songProvider";
+import Publish from "../pages/Publish";
 
 const Router: React.FC = () => {
   return (
@@ -35,6 +36,9 @@ const Router: React.FC = () => {
             </Route>
             <Route path="/feed">
               <Feed />
+            </Route>
+            <Route path="/publish">
+              <Publish />
             </Route>
           </Switch>
         </BrowserRouter>

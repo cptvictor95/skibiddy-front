@@ -3,7 +3,7 @@ import React from "react";
 import { baseUrl } from "../contants";
 import AuthCtx from "../context/authContext";
 import SongContext from "../context/songContext";
-import { Song } from "../interface/Song";
+import { Song, SongDTO } from "../interface/Song";
 
 export const SongProvider: React.FC<{ children: any }> = ({ children }) => {
   const [songs, setSongs] = React.useState<Song[] | null>([]);
@@ -18,12 +18,28 @@ export const SongProvider: React.FC<{ children: any }> = ({ children }) => {
       });
       console.log(response.data);
       setSongs(response.data.songs);
+      return response;
     } catch (error) {
       throw new Error(error.message);
     }
   };
+
+  const createSong = async (data: SongDTO) => {
+    try {
+      const response = await axios.post(`${baseUrl}/songs`, data, {
+        headers: {
+          authorization: authStates.token,
+        },
+      });
+
+      return response;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
   const songStates = { songs };
-  const songActions = { getSongs };
+  const songActions = { getSongs, createSong };
   return (
     <SongContext.Provider value={{ songStates, songActions }}>
       {children}
