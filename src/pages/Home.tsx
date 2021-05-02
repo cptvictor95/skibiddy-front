@@ -5,11 +5,11 @@ import Main from "../layouts/Main";
 import Hero from "../sections/Hero";
 
 const Home: React.FC = () => {
-  const { states } = useContext(AuthCtx);
+  const { authStates } = useContext(AuthCtx);
   const history = useHistory();
   useEffect(() => {
-    if (states.token) history.push("/feed");
-  }, [states.token]);
+    if (authStates.token) history.push("/feed");
+  }, [authStates.token]);
   return (
     <Main title="Home">
       <Hero
