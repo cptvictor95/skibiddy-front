@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
-import { baseUrlProd, baseUrlDev } from "../contants";
+import { baseUrlProd } from "../contants";
+// import { baseUrlDev } from "../contants";
 import AuthContext from "../context/authContext";
 import { SignInDTO, SignUpDTO } from "../interface/Auth";
 
