@@ -12,7 +12,7 @@ export const SongProvider: React.FC<{ children: any }> = ({ children }) => {
 
   const getSongs = async () => {
     try {
-      const response = await axios.get(`${baseUrlProd}songs`, {
+      const response = await axios.get(`${baseUrlProd}/songs`, {
         headers: {
           authorization: authStates.token,
         },
@@ -27,7 +27,7 @@ export const SongProvider: React.FC<{ children: any }> = ({ children }) => {
 
   const createSong = async (data: SongDTO) => {
     try {
-      const response = await axios.post(`${baseUrlProd}songs`, data, {
+      const response = await axios.post(`${baseUrlProd}/songs`, data, {
         headers: {
           authorization: authStates.token,
         },
