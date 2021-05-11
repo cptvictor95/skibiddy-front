@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
-import { baseUrlProd } from "../contants";
-// import { baseUrlDev } from "../contants";
+// import { baseUrlProd } from "../contants";
+import { baseUrlDev } from "../contants";
 import AuthContext from "../context/authContext";
 import { SignInDTO, SignUpDTO } from "../interface/Auth";
 
@@ -12,7 +12,7 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
 
   const signIn = async (data: SignInDTO) => {
     try {
-      const response = await axios.post(`${baseUrlProd}/signin`, data);
+      const response = await axios.post(`${baseUrlDev}/signin`, data);
 
       const token = response.data.token;
       localStorage.setItem("token", token);
@@ -26,7 +26,7 @@ export const AuthProvider: React.FC<{ children: any }> = ({ children }) => {
 
   const signUp = async (data: SignUpDTO) => {
     try {
-      const response = await axios.post(`${baseUrlProd}/signup`, data);
+      const response = await axios.post(`${baseUrlDev}/signup`, data);
       const token = response.data.token;
       localStorage.setItem("token", token);
       setToken(response.data.token);

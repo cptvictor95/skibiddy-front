@@ -37,6 +37,11 @@ const theme = extendTheme({
       fontWeight: "normal",
       mb: 4,
     },
+    h3: {
+      fontSize: "2xl",
+      fontWeight: "normal",
+      mb: 4,
+    },
   },
   colors: {
     neutral: {
