@@ -6,9 +6,10 @@ import AuthCtx from "../context/authContext";
 import SongContext from "../context/songContext";
 import { Song, SongDTO } from "../interface/Song";
 
-export const SongProvider: React.FC<{ children: any }> = ({ children }) => {
+export const SongProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [songs, setSongs] = React.useState<Song[] | null>([]);
-  const [filteredSongs, setFilteredSongs] = React.useState<Song[] | null>([]);
   const { authStates } = React.useContext(AuthCtx);
 
   const getSongs = async () => {
@@ -18,7 +19,7 @@ export const SongProvider: React.FC<{ children: any }> = ({ children }) => {
           authorization: authStates.token,
         },
       });
-      console.log(response.data);
+
       setSongs(response.data.songs);
       return response;
     } catch (error) {
@@ -26,43 +27,23 @@ export const SongProvider: React.FC<{ children: any }> = ({ children }) => {
     }
   };
 
-  const getSongsByAuthor = (data: string) => {
-    return axios
-      .get(`${baseUrlDev}/songs/search?name=${data}`, {
-        headers: {
-          authorization: authStates.token,
-        },
-      })
-      .then((res) => {
-        console.info("axios data Input", data);
-        console.info("axios getSongs Array", res.data.songs);
+  const getFilteredSongs = async (data: string, filterType: string) => {
+    try {
+      const response = await axios.get(
+        `${baseUrlDev}/songs/search?${filterType}=${data}`,
+        {
+          headers: {
+            authorization: authStates.token,
+          },
+        }
+      );
 
-        return res.data.songs;
-      })
-      .catch((error) => {
-        throw new Error(error.message);
-      });
+      setSongs(response.data.songs);
+      return response.data.songs;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   };
-
-  // const getSongsByAuthor = async (data: string) => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${baseUrlDev}/songs/search?name=${data}`,
-  //       {
-  //         headers: {
-  //           authorization: authStates.token,
-  //         },
-  //       }
-  //     );
-
-  //     console.info("axios getsongs data input", data);
-  //     console.info("axios getsongs", response.data.songs);
-
-  //     return response.data.songs;
-  //   } catch (error) {
-  //     throw new Error(error.message);
-  //   }
-  // };
 
   const createSong = async (data: SongDTO) => {
     try {
@@ -71,15 +52,15 @@ export const SongProvider: React.FC<{ children: any }> = ({ children }) => {
           authorization: authStates.token,
         },
       });
-      setFilteredSongs(response.data.songs);
+      setSongs(response.data.songs);
       return response;
     } catch (error) {
       throw new Error(error.message);
     }
   };
 
-  const songStates = { songs, filteredSongs };
-  const songActions = { getSongs, createSong, getSongsByAuthor };
+  const songStates = { songs };
+  const songActions = { getSongs, createSong, getFilteredSongs, setSongs };
   return (
     <SongContext.Provider value={{ songStates, songActions }}>
       {children}

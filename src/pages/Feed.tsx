@@ -1,7 +1,7 @@
-import { Flex, Text } from "@chakra-ui/layout";
+import { Flex, Stack, Text } from "@chakra-ui/layout";
 import useAuth from "../hooks/useAuth";
 import Main from "../layouts/Main";
-import React, { useState } from "react";
+import React from "react";
 import AuthCtx from "../context/authContext";
 import { Song } from "../interface/Song";
 import SongCtx from "../context/songContext";
@@ -10,81 +10,92 @@ import { Input } from "@chakra-ui/input";
 import { useForm } from "react-hook-form";
 import { IconButton } from "@chakra-ui/button";
 import { Search2Icon } from "@chakra-ui/icons";
+import { Select } from "@chakra-ui/select";
 
-const Feed = () => {
+interface SearchTypes {
+  searchInput: string;
+  searchType: string;
+}
+
+const Feed: React.FC = () => {
   useAuth();
   const { authStates } = React.useContext(AuthCtx);
   const { songStates, songActions } = React.useContext(SongCtx);
-  const [songs, setSongs] = useState([]);
   const { register, handleSubmit } = useForm();
 
   React.useEffect(() => {
-    if (authStates.token) {
-      console.info("auth state token", authStates.token);
-    }
     songActions.getSongs();
-    console.info("filtered songs", songStates.filteredSongs);
+  }, [authStates.token, songStates.setSongs]);
 
-    const myHeaders = new Headers({
-      Authorization: authStates.token as string,
-      "Content-Type": "application/json",
-    });
-
-    const myInit = {
-      method: "GET",
-      headers: myHeaders,
-    };
-
-    const myRequest = new Request(
-      "https://skibiddy-backend.herokuapp.com/songs",
-      myInit
-    );
-
-    try {
-      const fetchSongs = async () => {
-        return await fetch(myRequest).then((result) => result.json());
-      };
-
-      const songs = fetchSongs();
-      songs.then((res) => {
-        console.info("songs with fetch", res.songs);
-        setSongs(res.songs);
-      });
-    } catch (error) {
-      throw new Error(error.message);
+  const onSearch = (data: SearchTypes) => {
+    if (data.searchInput) {
+      return songActions.getFilteredSongs(data.searchInput, data.searchType);
     }
-  }, [authStates.token, songStates.filteredSongs, setSongs]);
-
-  const onSearch = (data: any) => {
-    return songActions.getSongsByAuthor(data.search);
+    if (!data.searchInput) {
+      return songActions.getSongs();
+    }
   };
 
   return (
     <Main title="Feed">
-      <Flex direction="column" minH="70vh" maxW="100%" px={8} mb={16}>
-        <Flex w="100%" justify="space-between">
-          <Text as="h2" textStyle="h2">
+      <Flex
+        as="article"
+        direction="column"
+        minH="70vh"
+        w="100%"
+        px={8}
+        mb={16}
+        justify={{ base: "center", md: "space-around", xl: "space-around" }}
+      >
+        <Flex
+          as="section"
+          w={{ base: "80%", sm: "100%", md: "100%" }}
+          direction={{ base: "column", sm: "row", xl: "row" }}
+          justify={{ base: "space-between", sm: "center" }}
+          align="center"
+        >
+          <Text
+            as="h2"
+            textStyle="h2"
+            w={{ base: "80%", sm: "100%", md: "60%" }}
+          >
             Songs list
           </Text>
-          <Flex as="form" onSubmit={handleSubmit(onSearch)}>
-            <IconButton
-              icon={<Search2Icon />}
-              mx={4}
-              aria-label="search"
-              type="submit"
-            />
-            <Input
-              {...register("search")}
-              placeholder="search by artist"
-              _placeholder={{
-                color: "gray",
-              }}
-            />
+          <Flex
+            as="form"
+            onSubmit={handleSubmit(onSearch)}
+            w={{ base: "80%", sm: "100%", md: "40%" }}
+          >
+            <Stack>
+              <Select {...register("searchType")}>
+                <option value="name">Author</option>
+                <option value="title">Title</option>
+                <option value="album">Album</option>
+                <option value="genre">Genre</option>
+              </Select>
+              <Flex>
+                <IconButton
+                  icon={<Search2Icon />}
+                  mr={4}
+                  aria-label="search"
+                  type="submit"
+                />
+                <Input
+                  {...register("search")}
+                  placeholder="Search"
+                  _placeholder={{
+                    color: "gray",
+                  }}
+                />
+              </Flex>
+            </Stack>
           </Flex>
         </Flex>
         <Flex flexWrap="wrap" p={4}>
-          {songs &&
-            songs.map((song: Song) => <SongCard song={song} key={song.id} />)}
+          {songStates.songs &&
+            songStates.songs.map((song: Song) => (
+              <SongCard song={song} key={song.id} />
+            ))}
         </Flex>
       </Flex>
     </Main>
