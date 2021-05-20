@@ -21,18 +21,16 @@ const Feed: React.FC = () => {
   useAuth();
   const { authStates } = React.useContext(AuthCtx);
   const { songStates, songActions } = React.useContext(SongCtx);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, watch } = useForm({ mode: "onChange" });
 
+  const myInput = watch("searchInput", "");
   React.useEffect(() => {
-    songActions.getSongs();
-  }, [authStates.token, songStates.setSongs]);
+    if (myInput === "") songActions.getSongs();
+  }, [authStates.token, myInput]);
 
   const onSearch = (data: SearchTypes) => {
     if (data.searchInput) {
       return songActions.getFilteredSongs(data.searchInput, data.searchType);
-    }
-    if (!data.searchInput) {
-      return songActions.getSongs();
     }
   };
 
@@ -81,7 +79,7 @@ const Feed: React.FC = () => {
                   type="submit"
                 />
                 <Input
-                  {...register("search")}
+                  {...register("searchInput")}
                   placeholder="Search"
                   _placeholder={{
                     color: "gray",
